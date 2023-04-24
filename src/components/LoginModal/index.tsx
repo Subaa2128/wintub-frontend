@@ -10,9 +10,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import { VisibilityOffSharp, VisibilitySharp } from "@mui/icons-material";
+import { baseURL } from "../../api";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -34,10 +37,20 @@ const LoginModal = ({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = () => {
-    setOpen(false);
-    alert("Invalid credentials");
+  const navigate = useNavigate();
+  const handleSubmit = async (values: any) => {
+    try {
+      const { data } = await axios.post(`${baseURL}/users/login`, {
+        email: values.email,
+        password: values.password,
+      });
+      console.log(data.token);
+      sessionStorage.setItem("token", data.token);
+      setOpen(false);
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClickShowPassword = () => {

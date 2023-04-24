@@ -9,10 +9,11 @@ import {
   Modal,
   OutlinedInput,
   TextField,
-  Typography,
 } from "@mui/material";
+import axios from "axios";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
+import { baseURL } from "../../api";
 
 const style = {
   position: "absolute",
@@ -34,9 +35,19 @@ const AddUser = ({
   setAddUser: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const handleSubmit = () => {
-    setAddUser(false);
-    alert("Invalid credentials");
+  const handleSubmit = async (values: any) => {
+    try {
+      const { data } = await axios.post(`${baseURL}/users/add`, {
+        role: values.role,
+        email: values.userEmail,
+        password: values.password,
+      });
+      console.log(data);
+      setAddUser(false);
+      alert("Invalid credentials");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleClickShowPassword = () => {

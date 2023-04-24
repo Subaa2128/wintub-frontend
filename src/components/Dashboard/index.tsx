@@ -10,15 +10,29 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import AddUser from "../AddUser";
+import { baseURL } from "../../api";
 
 const Dashboard: React.FC = () => {
-  const [addUser, setAddUser] = useState(false);
+  const [addUser] = useState(false);
+  const [userData, setUserData] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
   const handleCloseModal = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get(`${baseURL}/users/`);
+      console.log(data);
+      setUserData(data);
+    };
+    getData();
+    return;
+  }, []);
+
   return (
     <div>
       <Paper
@@ -63,10 +77,12 @@ const Dashboard: React.FC = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>arunram@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-              </TableRow>
+              {userData.map((f, i) => (
+                <TableRow key={i}>
+                  <TableCell>{f.email}</TableCell>
+                  <TableCell>{f.role}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
