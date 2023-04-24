@@ -1,0 +1,121 @@
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Modal,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+import { Form, Formik } from "formik";
+import { VisibilityOffSharp, VisibilitySharp } from "@mui/icons-material";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+const LoginModal = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = () => {
+    setOpen(false);
+    alert("Invalid credentials");
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword((p) => !p);
+  };
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+  return (
+    <Modal
+      open={!open}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" variant="h6" component="h2" mb={2}>
+          Login
+        </Typography>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={handleSubmit}
+          enableReinitialize
+        >
+          {({ handleBlur, handleChange, errors, touched, values }) => (
+            <Form>
+              <Box display="flex" flexDirection="column" gap={2}>
+                <TextField
+                  label="Email"
+                  id="email"
+                  name="email"
+                  value={values.email}
+                  fullWidth
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={touched.email && Boolean(errors.email)}
+                  helperText={touched.email && errors.email}
+                />
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    type={showPassword ? "text" : "password"}
+                    id="outlined-adornment-password"
+                    value={values.password}
+                    onChange={handleChange("password")}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          edge="end"
+                          onMouseDown={handleMouseDownPassword}
+                          onClick={handleClickShowPassword}
+                        >
+                          {showPassword ? (
+                            <VisibilityOffSharp />
+                          ) : (
+                            <VisibilitySharp />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  ></OutlinedInput>
+                </FormControl>
+                <Button type="submit" variant="contained">
+                  confirm
+                </Button>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      </Box>
+    </Modal>
+  );
+};
+
+export default LoginModal;
