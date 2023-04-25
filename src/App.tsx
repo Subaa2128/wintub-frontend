@@ -1,5 +1,5 @@
 import React from "react";
-// import LoginModal from "./components/LoginModal";
+import LoginModal from "./components/LoginModal";
 import { Routes, Route } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Dashboard from "./components/Dashboard";
@@ -49,16 +49,14 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
-      {/* {!open ? (
+
+      {!open ? (
         <LoginModal open={open} setOpen={setOpen} />
       ) : (
         <Routes>
           <Route path="/" element={<Dashboard />} />
         </Routes>
-      )} */}
+      )}
     </ThemeProvider>
   );
 };
