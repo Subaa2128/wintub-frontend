@@ -47,7 +47,7 @@ const LoginModal = ({
         alert(data.error.message);
         return;
       }
-      localStorage.setItem("token", JSON.stringify(data));
+      localStorage.setItem("token", JSON.stringify(data.token));
 
       setOpen(true);
     } catch (error) {
