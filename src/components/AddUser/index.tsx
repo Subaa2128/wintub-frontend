@@ -6,8 +6,10 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  MenuItem,
   Modal,
   OutlinedInput,
+  Select,
   TextField,
 } from "@mui/material";
 import axios from "axios";
@@ -110,17 +112,21 @@ const AddUser = ({
                       label="Password"
                     ></OutlinedInput>
                   </FormControl>
-                  <TextField
-                    label="Role"
-                    id="role"
-                    name="role"
-                    value={values.role}
-                    fullWidth
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    error={touched.role && Boolean(errors.role)}
-                    helperText={touched.role && errors.role}
-                  />
+
+                  <FormControl style={{ maxWidth: 400, width: "100%" }}>
+                    <InputLabel id="role">Role</InputLabel>
+                    <Select
+                      label="Role"
+                      id="role"
+                      name="role"
+                      aria-describedby="select-class"
+                      value={values.role}
+                    >
+                      <MenuItem>Admin</MenuItem>
+                      <MenuItem>Role</MenuItem>
+                    </Select>
+                  </FormControl>
+
                   <Button type="submit" variant="contained">
                     confirm
                   </Button>

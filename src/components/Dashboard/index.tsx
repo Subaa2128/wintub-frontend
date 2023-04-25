@@ -55,17 +55,22 @@ const Dashboard: React.FC = () => {
         >
           <Typography variant="h4">Login UserEmail</Typography>
 
-          <Box>
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => setOpen(!open)}
-            >
-              Add User
-            </Button>
-            {open && (
-              <AddUser addUser={addUser} setAddUser={handleCloseModal} />
-            )}
+          <Box display="flex" gap={1}>
+            <Box>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={() => setOpen(!open)}
+              >
+                Add User
+              </Button>
+              {open && (
+                <AddUser addUser={addUser} setAddUser={handleCloseModal} />
+              )}
+            </Box>
+            <Box>
+              <Button variant="contained">Logout</Button>
+            </Box>
           </Box>
         </Box>
         <TableContainer style={{ marginTop: "35px" }}>

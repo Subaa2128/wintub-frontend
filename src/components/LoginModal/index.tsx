@@ -44,7 +44,7 @@ const LoginModal = ({
         email: values.email,
         password: values.password,
       });
-      console.log(data.token);
+      console.log(data);
       sessionStorage.setItem("token", data.token);
       setOpen(false);
       navigate("/dashboard");
