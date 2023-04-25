@@ -37,6 +37,12 @@ const AddUser = ({
   setAddUser: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const options = [
+    { value: "Admin", label: "Admin" },
+    { value: "Role", label: "Role" },
+  ];
   const handleSubmit = async (values: any) => {
     try {
       const { data } = await axios.post(
@@ -132,10 +138,14 @@ const AddUser = ({
                       id="role"
                       name="role"
                       aria-describedby="select-class"
-                      value={values.role}
+                      value={selectedValue}
+                      onChange={(e) => setSelectedValue(e.target.value)}
                     >
-                      <MenuItem>Admin</MenuItem>
-                      <MenuItem>Role</MenuItem>
+                      {options.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
 
