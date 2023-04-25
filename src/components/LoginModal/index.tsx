@@ -48,6 +48,8 @@ const LoginModal = ({
         return;
       }
       localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("email", data.result.email);
+      localStorage.setItem("role", data.result.role);
 
       setOpen(true);
     } catch (error) {

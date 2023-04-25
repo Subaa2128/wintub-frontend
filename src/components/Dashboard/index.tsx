@@ -53,17 +53,19 @@ const Dashboard: React.FC = () => {
           mb={4}
           flexDirection="row"
         >
-          <Typography variant="h4">Login UserEmail</Typography>
+          <Typography variant="h4">{localStorage.getItem("email")}</Typography>
 
           <Box display="flex" gap={1}>
             <Box>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={() => setOpen(!open)}
-              >
-                Add User
-              </Button>
+              {localStorage.getItem("role") === "admin" && (
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => setOpen(!open)}
+                >
+                  Add User
+                </Button>
+              )}
               {open && (
                 <AddUser addUser={addUser} setAddUser={handleCloseModal} />
               )}
