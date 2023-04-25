@@ -41,7 +41,7 @@ const AddUser = ({
 
   const options = [
     { value: "Admin", label: "Admin" },
-    { value: "Role", label: "Role" },
+    { value: "User", label: "User" },
   ];
   const handleSubmit = async (values: any) => {
     try {
@@ -148,7 +148,6 @@ const AddUser = ({
                       ))}
                     </Select>
                   </FormControl>
-
                   <Button type="submit" variant="contained">
                     confirm
                   </Button>

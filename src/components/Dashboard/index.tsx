@@ -19,6 +19,20 @@ const Dashboard: React.FC = () => {
   const [addUser] = useState(false);
   const [userData, setUserData] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+  };
+
   const handleCloseModal = () => {
     setOpen(false);
   };
@@ -69,7 +83,13 @@ const Dashboard: React.FC = () => {
               )}
             </Box>
             <Box>
-              <Button variant="contained">Logout</Button>
+              {isLoggedIn ? (
+                <div>You are not logged in</div>
+              ) : (
+                <Button variant="contained" onClick={handleLogout}>
+                  Logout
+                </Button>
+              )}
             </Box>
           </Box>
         </Box>
