@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { VisibilityOffSharp, VisibilitySharp } from "@mui/icons-material";
 import {
   Box,
@@ -12,9 +13,8 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Form, Formik } from "formik";
-import React, { useState } from "react";
 import { baseURL } from "../../api";
 
 const style = {
@@ -42,6 +42,7 @@ const AddUser = ({
     { value: "admin", label: "Admin" },
     { value: "user", label: "User" },
   ];
+
   const handleSubmit = async (values: any) => {
     console.log(values);
     const storage = JSON.parse(localStorage.getItem("user") as string);
@@ -64,9 +65,13 @@ const AddUser = ({
         return;
       }
       console.log(data);
+      window.location.reload();
       setAddUser(false);
     } catch (error) {
       console.log(error);
+      if (error instanceof AxiosError) {
+        alert(error.response?.data);
+      }
     }
   };
 
@@ -148,7 +153,6 @@ const AddUser = ({
                       ))}
                     </Select>
                   </FormControl>
-
                   <Button type="submit" variant="contained">
                     confirm
                   </Button>

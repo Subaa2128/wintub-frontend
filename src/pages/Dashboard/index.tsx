@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,17 +12,18 @@ import {
   Typography,
 } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import AddUser from "../AddUser";
+import AddUser from "../../components/AddUser";
 import { baseURL } from "../../api";
+import { IUserDetails } from "../../constants/types";
 
-const Dashboard: React.FC = () => {
+interface IDashboard {
+  setOpenUser: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Dashboard: React.FC<IDashboard> = ({ setOpenUser }) => {
   const [addUser] = useState(false);
-  const [userData, setUserData] = useState<any[]>([]);
+  const [userData, setUserData] = useState<IUserDetails[]>([]);
   const [open, setOpen] = useState(false);
-  const handleCloseModal = () => {
-    setOpen(false);
-  };
 
   useEffect(() => {
     const getData = async () => {
@@ -32,6 +34,15 @@ const Dashboard: React.FC = () => {
     getData();
     return;
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setOpenUser(false);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
 
   const storage = JSON.parse(localStorage.getItem("user") as string);
 
@@ -73,7 +84,9 @@ const Dashboard: React.FC = () => {
               )}
             </Box>
             <Box>
-              <Button variant="contained">Logout</Button>
+              <Button variant="contained" onClick={handleLogout}>
+                Logout
+              </Button>
             </Box>
           </Box>
         </Box>

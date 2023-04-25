@@ -1,21 +1,24 @@
 import React from "react";
-import LoginModal from "./components/LoginModal";
-import { Routes, Route } from "react-router-dom";
-import CssBaseline from "@mui/material/CssBaseline";
-import Dashboard from "./components/Dashboard";
-import { ThemeProvider, createTheme, responsiveFontSizes } from "@mui/material";
 import {
   LinkProps as RouterLinkProps,
   Link as RouterLink,
 } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
 import { LinkProps } from "@mui/material/Link";
+import { ThemeProvider, createTheme, responsiveFontSizes } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+
+import LoginModal from "./components/LoginModal";
+import Dashboard from "./pages/Dashboard";
 
 const App: React.FC = () => {
-  const [open, setOpen] = React.useState(() => {
-    const data = localStorage.getItem("token");
-    if (!data) return true;
-    return false;
+  const [isUser, setIsUser] = React.useState(() => {
+    const data = localStorage.getItem("user");
+    if (!data) return false;
+    return true;
   });
+  console.log(isUser);
 
   const LinkBehavior = React.forwardRef<
     HTMLAnchorElement,
@@ -50,13 +53,18 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {!open && !localStorage.getItem("user") ? (
-        <LoginModal open={open} setOpen={setOpen} />
-      ) : (
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-        </Routes>
-      )}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            !isUser ? (
+              <LoginModal setIsUser={setIsUser} />
+            ) : (
+              <Dashboard setOpenUser={setIsUser} />
+            )
+          }
+        />
+      </Routes>
     </ThemeProvider>
   );
 };

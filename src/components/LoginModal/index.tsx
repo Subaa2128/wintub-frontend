@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -10,11 +11,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import React, { useState } from "react";
-import { Form, Formik } from "formik";
 import { VisibilityOffSharp, VisibilitySharp } from "@mui/icons-material";
+import axios from "axios";
+import { Form, Formik } from "formik";
 import { baseURL } from "../../api";
+import { IUserValues } from "../../constants/types";
 
 const style = {
   position: "absolute",
@@ -29,14 +30,12 @@ const style = {
 };
 
 const LoginModal = ({
-  open,
-  setOpen,
+  setIsUser,
 }: {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsUser: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: IUserValues) => {
     try {
       const { data } = await axios.post(`${baseURL}/users/login`, {
         email: values.email,
@@ -56,7 +55,7 @@ const LoginModal = ({
         })
       );
 
-      setOpen(true);
+      setIsUser(true);
     } catch (error) {
       console.log(error);
     }
@@ -71,9 +70,10 @@ const LoginModal = ({
   ) => {
     event.preventDefault();
   };
+
   return (
     <Modal
-      open={open}
+      open
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
