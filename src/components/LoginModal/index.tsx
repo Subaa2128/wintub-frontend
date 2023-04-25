@@ -47,9 +47,14 @@ const LoginModal = ({
         alert(data.error.message);
         return;
       }
-      localStorage.setItem("token", JSON.stringify(data.token));
-      localStorage.setItem("email", data.result.email);
-      localStorage.setItem("role", data.result.role);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          token: data.token,
+          email: data.result.email,
+          role: data.result.role,
+        })
+      );
 
       setOpen(true);
     } catch (error) {
@@ -68,7 +73,7 @@ const LoginModal = ({
   };
   return (
     <Modal
-      open={!open}
+      open={open}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

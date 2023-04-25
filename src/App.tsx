@@ -50,7 +50,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {!open ? (
+      {!open && !localStorage.getItem("user") ? (
         <LoginModal open={open} setOpen={setOpen} />
       ) : (
         <Routes>

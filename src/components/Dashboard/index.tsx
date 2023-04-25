@@ -33,6 +33,8 @@ const Dashboard: React.FC = () => {
     return;
   }, []);
 
+  const storage = JSON.parse(localStorage.getItem("user") as string);
+
   return (
     <div>
       <Paper
@@ -53,11 +55,11 @@ const Dashboard: React.FC = () => {
           mb={4}
           flexDirection="row"
         >
-          <Typography variant="h4">{localStorage.getItem("email")}</Typography>
+          <Typography variant="h4">{storage?.email}</Typography>
 
           <Box display="flex" gap={1}>
             <Box>
-              {localStorage.getItem("role") === "admin" && (
+              {storage?.role === "admin" && (
                 <Button
                   color="primary"
                   variant="contained"

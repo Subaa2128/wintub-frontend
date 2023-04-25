@@ -37,13 +37,14 @@ const AddUser = ({
   setAddUser: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
 
   const options = [
-    { value: "Admin", label: "Admin" },
-    { value: "Role", label: "Role" },
+    { value: "admin", label: "Admin" },
+    { value: "user", label: "User" },
   ];
   const handleSubmit = async (values: any) => {
+    console.log(values);
+    const storage = JSON.parse(localStorage.getItem("user") as string);
     try {
       const { data } = await axios.post(
         `${baseURL}/users/add`,
@@ -54,7 +55,7 @@ const AddUser = ({
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${storage.token}`,
           },
         }
       );
@@ -62,7 +63,6 @@ const AddUser = ({
         alert(data.error.message);
         return;
       }
-      window.location.reload();
       console.log(data);
       setAddUser(false);
     } catch (error) {
@@ -138,8 +138,8 @@ const AddUser = ({
                       id="role"
                       name="role"
                       aria-describedby="select-class"
-                      value={selectedValue}
-                      onChange={(e) => setSelectedValue(e.target.value)}
+                      value={values.role}
+                      onChange={handleChange}
                     >
                       {options.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
