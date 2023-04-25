@@ -5,19 +5,18 @@ import Dashboard from "./components/Dashboard";
 
 const App: React.FC = () => {
   const [open, setOpen] = React.useState(() => {
-    const data = sessionStorage.getItem("id");
-    if (!data) return false;
-    if (JSON.parse(data) === true) return true;
+    const data = localStorage.getItem("token");
+    if (!data) return true;
     return false;
   });
 
   return (
     <div>
-      {!open ? (
+      {open ? (
         <LoginModal open={open} setOpen={setOpen} />
       ) : (
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
         </Routes>
       )}
       {/* 

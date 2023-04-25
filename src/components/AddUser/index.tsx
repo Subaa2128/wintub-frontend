@@ -37,14 +37,26 @@ const AddUser = ({
   const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = async (values: any) => {
     try {
-      const { data } = await axios.post(`${baseURL}/users/add`, {
-        role: values.role,
-        email: values.userEmail,
-        password: values.password,
-      });
+      const { data } = await axios.post(
+        `${baseURL}/users/add`,
+        {
+          role: values.role,
+          email: values.userEmail,
+          password: values.password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (data.error) {
+        alert(data.error.message);
+        return;
+      }
+      window.location.reload();
       console.log(data);
       setAddUser(false);
-      alert("Invalid credentials");
     } catch (error) {
       console.log(error);
     }
